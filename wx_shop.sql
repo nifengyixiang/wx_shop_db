@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 腾讯云
-Source Server Version : 50723
-Source Host           : 111.231.85.110:3306
+Source Server         : localhost_3306
+Source Server Version : 50717
+Source Host           : localhost:3306
 Source Database       : wx_shop
 
 Target Server Type    : MYSQL
-Target Server Version : 50723
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-09-13 15:24:21
+Date: 2018-09-13 18:02:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,11 +45,12 @@ CREATE TABLE `authority` (
   `authority_desc` varchar(255) DEFAULT NULL COMMENT '权限描述',
   `value` varchar(255) NOT NULL COMMENT '权限值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of authority
 -- ----------------------------
+INSERT INTO `authority` VALUES ('1', 'root', '超级管理员权限', '-1');
 
 -- ----------------------------
 -- Table structure for business
@@ -284,11 +285,12 @@ CREATE TABLE `role` (
   `authority_ids` varchar(255) NOT NULL COMMENT '权限id组',
   `role_desc` varchar(255) DEFAULT NULL COMMENT '角色描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
+INSERT INTO `role` VALUES ('1', 'root', '1', '超级管理员，最高权限');
 
 -- ----------------------------
 -- Table structure for table
@@ -331,6 +333,7 @@ CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `open_id` varchar(255) DEFAULT NULL COMMENT '微信的openid',
   `phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
+  `user_no` varchar(255) DEFAULT NULL COMMENT '用户账号',
   `email` varchar(255) DEFAULT NULL COMMENT '用户邮箱',
   `password` varchar(255) DEFAULT NULL COMMENT '用户密码',
   `role_id` int(10) unsigned NOT NULL COMMENT '角色id',
@@ -346,9 +349,11 @@ CREATE TABLE `user` (
   `create_time` datetime NOT NULL COMMENT '用户创建时间',
   `signin_time` datetime NOT NULL COMMENT '上次登录时间',
   `business_id` int(11) DEFAULT NULL COMMENT '商家用户关联商店id',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_no` (`user_no`) USING BTREE COMMENT '用户账号唯一不可重复'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('1', null, null, 'root', null, 'root123', '1', 'big-boss', '1', 'https://www.baidu.com/img/bd_logo1.png', '上海', '上海', '浦东新区', '唐镇', null, '超级管理员，嘿嘿嘿', '2018-09-13 16:45:18', '2018-09-13 16:45:25', null);
